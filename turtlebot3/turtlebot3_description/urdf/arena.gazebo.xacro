@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<robot name="arena1" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <gazebo reference="plate1">
+    <mu1>.1</mu1>
+    <mu2>.1</mu2>
+    <kp>500000.0</kp>
+    <kd>10000.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>1.0</maxVel>
+    <fdir1>1 0 0</fdir1>
+    <material>Gazebo/Grass   </material>
+  </gazebo>
+
+  <gazebo reference="3rd_quad">
+    <mu1>0.0082</mu1>
+    <mu2>0.0082</mu2>
+    <kp>500000.0</kp>
+    <kd>10000.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>1</maxVel>
+    <fdir1>1 0 0</fdir1>
+    <material>Gazebo/Residential    </material>
+  </gazebo>
+
+  <gazebo reference="4th_quad">
+    <mu1>0.1</mu1>
+    <mu2>0.1</mu2>
+    <kp>1000000.0</kp>
+    <kd>100000.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>1.0</maxVel>
+    <material>Gazebo/Grass  </material>
+  </gazebo>
+
+
+<!--   <gazebo reference="road">
+    <mu1>0.1</mu1>
+    <mu2>0.1</mu2>
+    <kp>500000.0</kp>
+    <kd>10000.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>1.0</maxVel>
+    <fdir1>1 0 0</fdir1>
+    <material>Gazebo/Green</material>
+  </gazebo>
+ -->
+
+    <gazebo reference="braker1">
+    <mu1>0.1</mu1>
+    <mu2>0.1</mu2>
+    <kp>500000.0</kp>
+    <kd>10000.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>1.0</maxVel>
+    <fdir1>1 0 0</fdir1>
+    <material>Gazebo/Steps  </material>
+  </gazebo>
+
+
+  <gazebo reference="braker2">
+    <mu1>0.1</mu1>
+    <mu2>0.1</mu2>
+    <kp>500000.0</kp>
+    <kd>10000.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>1.0</maxVel>
+    <fdir1>1 0 0</fdir1>
+    <material>Gazebo/Steps   </material>
+  </gazebo>
+
+
+</robot>

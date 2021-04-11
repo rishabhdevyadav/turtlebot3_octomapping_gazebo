@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<robot name="arena1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find turtlebot3_description)/urdf/arena.gazebo.xacro"/>
+
+<!-- #Create Cuboid -->
+<xacro:macro name="cuboid" params="name origin_xyz origin_rpy m l b h">
+  <link name="${name}">
+
+   <inertial>
+     <origin rpy="${origin_rpy}" xyz="${origin_xyz}" />
+     <mass value="${m}"/>
+     <inertia ixx="${m*((b*b) + (h*h))/12}"  ixy="0"  ixz="0" iyy="${m*((l*l) + (h*h))/12}" iyz="0" izz="${m*((b*b) + (l*l))/12}" /> 
+   </inertial>
+
+   <visual>
+     <origin rpy="${origin_rpy}" xyz="${origin_xyz}" />
+     <geometry>
+       <box size="${l} ${b} ${h}" />
+     </geometry>
+     <material name="Cyan">
+       <color rgba="0 1.0 1.0 1.0"/>
+     </material>
+   </visual>
+
+   <collision>
+    <origin rpy="${origin_rpy}" xyz="${origin_xyz}" />
+    <geometry>
+       <box size="${l} ${b} ${h}" />
+     </geometry>
+<!--      <surface>
+            <friction>
+              <ode>
+                <mu>100000</mu>
+                <mu2>100000</mu2>
+                <slip1>100.0</slip1>
+                <slip2>100.0</slip2>
+
+                <kp value="1000" />
+                <kd value="1000" />
+              </ode>
+            </friction>
+          </surface> -->
+   </collision>
+  </link>
+
+<!--  <gazebo reference="${name}">
+    <material>Gazebo/${appear}</material>
+ </gazebo> -->
+</xacro:macro>
+
+
+<!-- Create cylinder -->
+<xacro:macro name="cylinderical" params="name origin_xyz origin_rpy m l r">
+  <link name="${name}">
+       <visual>
+        <origin rpy="${origin_rpy}" xyz="${origin_xyz}" />
+         <geometry>
+           <cylinder length="${l}" radius="${r}"/>
+         </geometry>
+         <material name="blue">
+           <!-- <color rgba="0 0 .8 1"/> -->
+         </material>
+       </visual>
+       <collision>
+        <origin rpy="${origin_rpy}" xyz="${origin_xyz}" />
+         <geometry>
+           <cylinder length="${l}" radius="${r}"/>
+         </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>10000</mu>
+                <mu2>10000</mu2>
+                <slip1>1.0</slip1>
+                <slip2>1.0</slip2>
+                <kp value="1000" />
+                <kd value="1000" />
+              </ode>
+            </friction>
+          </surface>
+       </collision>
+       <inertial>
+        <origin rpy="${origin_rpy}" xyz="${origin_xyz}" />
+         <mass value="${m}"/>
+         <inertia ixx="${m*((3*r*r) + (l*l))/12}" ixy="0.0" ixz="0.0" iyy="${m*((3*l*l) + (l*l))/12}" iyz="0.0" izz="${m*l*l/12}"/>
+       </inertial>
+     </link>
+
+<!--  <gazebo reference="${name}">
+    <material>Gazebo/Red</material>
+ </gazebo> -->
+</xacro:macro>
+
+
+<!-- joints -->
+  <xacro:macro name="calljoint" params="name type axis_xyz origin_rpy origin_xyz parent child">
+    <joint name="${name}" type="${type}">
+      <parent link="${parent}" />
+      <child link="${child}" />
+      <axis xyz="${axis_xyz}" /> 
+      <limit effort="1000.0" lower="-3.14" upper="3.14" velocity="0.5" />
+      <dynamics damping="0.0" friction="0.0"/>
+      <origin rpy="${origin_rpy}" xyz="${origin_xyz}" /> 
+    </joint>
+  </xacro:macro>
+
+
+<xacro:cuboid name="plate1" origin_xyz="0 5 0.2" origin_rpy="0 0 0" m="50" l="40" b="10" h="4" />
+<xacro:cuboid name="3rd_quad" origin_xyz="-5 -5 0.2" origin_rpy="0 0 0" m="50" l="20" b="10" h="4" />
+<xacro:cuboid name="4th_quad" origin_xyz="5 -5 0.2" origin_rpy="0 0 0" m="50" l="20" b="10" h="4" />
+<xacro:calljoint name="joint1" type="fixed" axis_xyz="0 1 0" origin_rpy="0 0 0" origin_xyz="-5 0 0" parent="plate1" child="3rd_quad"/> 
+<xacro:calljoint name="joint2" type="fixed" axis_xyz="0 1 0" origin_rpy="0 0 0" origin_xyz="5 0 0" parent="plate1" child="4th_quad"/> 
+
+
+<xacro:cylinderical name="braker1" origin_xyz="-2 2 0.2" origin_rpy="1.5708 0 2.35619" m="10" l="5.5" r="1" />
+<xacro:cylinderical name="braker2" origin_xyz="2 -2 0.2" origin_rpy="1.5708 0 2.35619" m="10" l="5.5" r="1" />
+
+
+<xacro:calljoint name="road_braker1" type="fixed" axis_xyz="0 1 0" origin_rpy="0 0 0" origin_xyz="0 0 1.015" parent="plate1" child="braker1"/> 
+<xacro:calljoint name="road_braker2" type="fixed" axis_xyz="0 1 0" origin_rpy="0 0 0" origin_xyz="0 0 1.015" parent="plate1" child="braker2"/> 
+
+
+
+
+
+<!-- <xacro:cuboid name="road" origin_xyz="0 0 0.2" origin_rpy="0 0 0" m="500" l="60" b="40" h="15" />
+<xacro:cylinderical name="braker" origin_xyz="0 0 0.2" origin_rpy="1.5708 0 0.785" m="500" l="40" r="1" />
+<xacro:calljoint name="road_braker" type="fixed" axis_xyz="0 1 0" origin_rpy="0 0 0" origin_xyz="0 0 6.505" parent="road" child="braker"/> 
+
+ -->
+
+</robot>

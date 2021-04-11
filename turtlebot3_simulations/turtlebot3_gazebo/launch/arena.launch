@@ -1,0 +1,27 @@
+<launch>  
+
+
+<group ns="A1">
+ 	<arg name="model" default="$(find turtlebot3_gazebo)/urdf/arena.urdf.xacro"/>
+    <param name="height_description" command="$(find xacro)/xacro.py '$(arg model)'"/>
+    <node name="height_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" respawn="false"
+          args="-urdf -param height_description -model height" />
+</group>
+
+<!-- <group ns="A2">
+    <arg name="model" default="$(find minion_robot)/urdf/arena2.urdf.xacro"/>
+    <param name="heightn_description" command="$(find xacro)/xacro.py '$(arg model)'"/>
+    <node name="heightn_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" respawn="false"
+          args="-urdf -param heightn_description -model nheight" />
+</group>
+
+<group ns="A3">
+    <arg name="model" default="$(find minion_robot)/urdf/arena3.urdf.xacro"/>
+    <param name="heightnn_description" command="$(find xacro)/xacro.py '$(arg model)'"/>
+    <node name="heightnn_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" respawn="false"
+          args="-urdf -param heightnn_description -model nnheight" />
+</group> -->
+
+
+
+</launch> 
